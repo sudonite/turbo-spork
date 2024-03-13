@@ -1,0 +1,29 @@
+Done: Regisztráció nélküli vásárlás
+Done: Termék név alapján keresés
+Done: Akciók kuponok
+Done: Ne lehessen 0-át, meg mínuszt hozzáadni a kosárhoz
+Done: Időzóna (esetleg)
+Done: Adatbázisba be lehessen állítani hogy a termék ne jelenjen meg az oldalon
+Done: Kedvencek "kosár" (be tudod szívezni a terméket)
+Done: Eddigi rendelések az oldalról (rendeléseim fül)
+
+Done: Statisztikák
+Done: Fórum gomb
+Done: Ne lehessen 100%-nál nagyobb kupont csinálni
+Done: Consts.ts -> URL-ek
+Done: Admin OutletContext Fix
+
+Mobil nézet:
+    Done: Termékek
+    Done: Kosár
+    Done: Rendelések
+    Done: Beállítások
+    Done: Admin
+    Login
+    Register
+    Navbar
+    Product carts (alsó gombok)
+Több termék kép
+Több stílus
+
+Docker

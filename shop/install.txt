@@ -1,0 +1,24 @@
+követelmény:
+    Node 21:
+        https://nodejs.org/en
+    Python 3:
+        https://www.python.org/
+
+
+### cmd 1 ###
+cd Frontend
+npm install
+npm run dev
+
+
+### cmd 2 ###
+cd Backend
+python -m venv env
+env\Scripts\activate
+pip install -r requirements.txt
+python manage.py runserver
+
+
+### Böngésző ###
+http://localhost:5173
+(Bejelentkezés: alma@gmail.com Alma123)
