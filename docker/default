@@ -11,4 +11,16 @@ server {
 	location /api {
 		proxy_pass http://127.0.0.1:8000;
 	}
+
+	location /forum {
+		root /var/www/forum;
+		location ~ /(inc|uploads/avatars) {
+			deny all;
+		}
+		location ~ \.php$ {
+			fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			include fastcgi_params;
+		}
+	}
 }
