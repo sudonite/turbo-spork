@@ -50,7 +50,7 @@ RUN mkdir /app && \
 	service nginx start && \
 	cd /app && \
 	service mariadb start && \
-	mariadb -e "GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+	mariadb -e "GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword' WITH GRANT OPTION; FLUSH PRIVILEGES;" && \
 	python manage.py runserver 0.0.0.0:8000
 
 EXPOSE 80
