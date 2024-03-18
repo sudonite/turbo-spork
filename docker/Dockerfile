@@ -36,22 +36,21 @@ RUN mkdir /var/www/forum && \
 
 RUN cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
 	chmod -R 0755 /var/www && \
-	chown -R www-data:www-data /var/www && \
-	cd /var/www/forum && \
-	php-fpm8.1 -R -D && \
-	service nginx start && \
-	mkdir /docker-entrypoint-initdb.d/ && \
-	cp /tmp/repo/docker/init.sql /docker-entrypoint-initdb.d/ && \
-
-CMD ["mysqld_safe"]
+	chown -R www-data:www-data /var/www
 
 RUN mkdir /app && \
-	cd /app && \
 	cp -R /tmp/repo/shop/Backend/* /app/ && \
+	cd /app && \
 	python3 -m venv env && \
 	source env/bin/activate && \
 	pip install -r /app/requirements.txt && \
 	pip install gunicorn && \ 
+	cd /var/www/forum && \
+	php-fpm8.1 -R -D && \
+	service nginx start && \
+	cd /app && \
+	service mariadb start && \
+	mariadb -e "GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 	python manage.py runserver 0.0.0.0:8000
 
 EXPOSE 80
