@@ -39,9 +39,10 @@ RUN cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
 	chown -R www-data:www-data /var/www && \
 	cd /var/www/forum && \
 	php-fpm8.1 -R -D && \
-	service nginx start
+	service nginx start && \
+	mkdir /docker-entrypoint-initdb.d/ && \
+	cp /tmp/repo/docker/init.sql /docker-entrypoint-initdb.d/ && \
 
-COPY /tmp/repo/docker/init.sql /docker-entrypoint-initdb.d/
 CMD ["mysqld_safe"]
 
 RUN mkdir /app && \
