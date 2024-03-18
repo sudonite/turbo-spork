@@ -6,9 +6,10 @@ server {
 
 	location / {
 		root /var/www/html;
+		try_files $uri /index.html;
 	}
 
-	location /product_img {
+	location /product_img/ {
 		root /app/img/products;
 
 	}
