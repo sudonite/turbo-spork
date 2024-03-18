@@ -47,6 +47,8 @@ RUN mkdir /app && \
 	pip install -r /app/requirements.txt && \
 	pip install gunicorn && \
 	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
+	chmod -R 0755 /var/www && \
+	chown -R www-data:www-data /var/www && \
 	cd /app && \
 	service nginx start && \
-	gunicorn --bind 0.0.0.0:8000 backend.wsgi
+	python manage.py runserver 0.0.0.0:8000
