@@ -10,15 +10,15 @@ server {
 	}
 
 	location /product_img/ {
-		root /app/img/products;
+		proxy_pass http://0.0.0.0:8000/products/;
 
 	}
 
-	location /api {
-		proxy_pass http://127.0.0.1:8000;
+	location /api/ {
+		proxy_pass http://0.0.0.0:8000/api/;
 	}
 
-#	location /forum {
+#	location /forum/ {
 #		root /var/www/forum;
 #		location ~ /(inc|uploads/avatars) {
 #			deny all;

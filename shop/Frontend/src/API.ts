@@ -19,9 +19,9 @@ instance.interceptors.request.use(async function (config) {
       if (expired) {
         localStorage.removeItem("jwt_token");
         if (decodedToken.anonymous) {
-          window.location.href = "http://172.17.0.2/products";
+          window.location.href = document.URL + "/products";
         } else {
-          window.location.href = "http://172.17.0.2/login";
+          window.location.href = document.URL + "/login";
         }
       } else {
         config.headers.Authorization = `Bearer ${jwtToken}`;
