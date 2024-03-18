@@ -23,7 +23,8 @@ RUN git clone https://github.com/sudonite/turbo-spork.git /tmp/repo && \
 	npm install typescript && \
 	npm run build && \
 	rm -rf /var/www/html/* && \
-	cp -R dist/* /var/www/html/
+	mkdir /var/www/shop && \
+	cp -R dist/* /var/www/shop/
 
 RUN mkdir /var/www/forum && \
 	cd /var/www/forum && \
@@ -34,8 +35,9 @@ RUN mkdir /var/www/forum && \
 	rmdir Upload && \
 	cd /var/www/forum && \
 	php-fpm8.1 -R && \
-	service nginx start
-	#service mariadb start
+	service mariadb start && \
+	mysql -u root -e "CREATE DATABASE forum;" && \
+	mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword';"
 
 RUN mkdir /app && \
 	cd /app && \
@@ -45,7 +47,6 @@ RUN mkdir /app && \
 	pip install -r /app/requirements.txt && \
 	pip install gunicorn && \
 	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
-	cd /app
-	#gunicorn --bind 0.0.0.0:8000 backend.wsgi
-	# CHANGE THIS TO 127.0.0.1
-	# ADD DB mysql -u root -e "CREATE DATABASE forum;"
+	cd /app && \
+	service nginx start && \
+	gunicorn --bind 0.0.0.0:8000 backend.wsgi
