@@ -1,3 +1,3 @@
-export const baseURL = "http://localhost:8000";
+export const baseURL = "http://127.0.0.1:8000";
 export const API = baseURL + "/api";
-export const PhotoURL = baseURL + "/products/";
+export const PhotoURL = baseURL + "/product_img/";

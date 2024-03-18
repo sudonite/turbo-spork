@@ -2,10 +2,10 @@ FROM ubuntu:latest
 
 SHELL ["/bin/bash", "-c"]
 
+EXPOSE 80
+
 ENV TZ=Europe/Budapest
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-EXPOSE 80
 
 RUN apt-get update -y && \
 	apt-get full-upgrade -y && \
@@ -25,15 +25,6 @@ RUN git clone https://github.com/sudonite/turbo-spork.git /tmp/repo && \
 	rm -rf /var/www/html/* && \
 	cp -R dist/* /var/www/html/
 
-RUN mkdir /app && \
-	cp -R /tmp/repo/shop/Backend/* /app/ && \
-	python3 -m venv env && \
-	source env/bin/activate && \
-	pip install -r /app/requirements.txt && \
-	pip install gunicorn && \
-	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
-	cd /app && \
-
 RUN mkdir /var/www/forum && \
 	cd /var/www/forum && \
 	wget https://resources.mybb.com/downloads/mybb_1837.zip && \
@@ -41,9 +32,20 @@ RUN mkdir /var/www/forum && \
 	mv /var/www/forum/Upload/* /var/www/forum && \
 	rm mybb_1837.zip && \
 	rmdir Upload && \
-	# CHANGE THIS TO 127.0.0.1
-	# ADD DB mysql -u root -e "CREATE DATABASE forum;" && \
 	cd /var/www/forum && \
 	php-fpm8.1 -R && \
-	service nginx start && \
-	gunicorn --bind 0.0.0.0:8000 backend.wsgi
+	service nginx start
+	#service mariadb start
+
+RUN mkdir /app && \
+	cd /app && \
+	cp -R /tmp/repo/shop/Backend/* /app/ && \
+	python3 -m venv env && \
+	source env/bin/activate && \
+	pip install -r /app/requirements.txt && \
+	pip install gunicorn && \
+	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
+	cd /app
+	#gunicorn --bind 0.0.0.0:8000 backend.wsgi
+	# CHANGE THIS TO 127.0.0.1
+	# ADD DB mysql -u root -e "CREATE DATABASE forum;"
