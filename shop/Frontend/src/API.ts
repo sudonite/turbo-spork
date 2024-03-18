@@ -1,6 +1,6 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { API } from "./Consts";
+import { API, baseURL } from "./Consts";
 
 const instance = axios.create({
   baseURL: API,
@@ -19,9 +19,9 @@ instance.interceptors.request.use(async function (config) {
       if (expired) {
         localStorage.removeItem("jwt_token");
         if (decodedToken.anonymous) {
-          window.location.href = document.URL + "/products";
+          window.location.href = baseURL + "/products";
         } else {
-          window.location.href = document.URL + "/login";
+          window.location.href = baseURL + "/login";
         }
       } else {
         config.headers.Authorization = `Bearer ${jwtToken}`;

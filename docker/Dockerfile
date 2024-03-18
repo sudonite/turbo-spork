@@ -33,8 +33,6 @@ RUN mkdir /var/www/forum && \
 	mv /var/www/forum/Upload/* /var/www/forum && \
 	rm mybb_1837.zip && \
 	rmdir Upload && \
-	cd /var/www/forum && \
-	php-fpm8.1 -R && \
 	service mariadb start && \
 	mysql -u root -e "CREATE DATABASE forum;" && \
 	mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword';"
@@ -49,6 +47,8 @@ RUN mkdir /app && \
 	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
 	chmod -R 0755 /var/www && \
 	chown -R www-data:www-data /var/www && \
-	cd /app && \
+	cd /var/www/forum && \
+	php-fpm8.1 -R -D && \
 	service nginx start && \
+	cd /app && \
 	python manage.py runserver 0.0.0.0:8000

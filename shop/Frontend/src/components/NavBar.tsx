@@ -46,7 +46,7 @@ const Navbar = () => {
           <Link to="/settings">Beállítások</Link>
         </Button>
         <Button variant="ghost" asChild>
-          <Link to="#">Fórum</Link>
+          <Link to={"http://forum." + document.domain}>Fórum</Link>
         </Button>
         {profile.is_admin && (
           <Button variant="ghost" asChild>
