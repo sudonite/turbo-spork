@@ -51,6 +51,6 @@ RUN mkdir /app && \
 	source env/bin/activate && \
 	pip install -r /app/requirements.txt && \
 	pip install gunicorn && \ 
-	python manage.py runserver 0.0.0.0:8000 && \
+	python manage.py runserver 0.0.0.0:8000
 
 EXPOSE 80
