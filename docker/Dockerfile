@@ -32,10 +32,17 @@ RUN mkdir /var/www/forum && \
 	unzip mybb_1837.zip && \
 	mv /var/www/forum/Upload/* /var/www/forum && \
 	rm mybb_1837.zip && \
-	rmdir Upload && \
-	service mariadb start && \
-	mysql -u root -e "CREATE DATABASE forum;" && \
-	mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'SuperSecurePassword';"
+	rmdir Upload
+
+RUN cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
+	chmod -R 0755 /var/www && \
+	chown -R www-data:www-data /var/www && \
+	cd /var/www/forum && \
+	php-fpm8.1 -R -D && \
+	service nginx start
+
+COPY /tmp/repo/docker/init.sql /docker-entrypoint-initdb.d/
+CMD ["mysqld_safe"]
 
 RUN mkdir /app && \
 	cd /app && \
@@ -43,12 +50,7 @@ RUN mkdir /app && \
 	python3 -m venv env && \
 	source env/bin/activate && \
 	pip install -r /app/requirements.txt && \
-	pip install gunicorn && \
-	cp /tmp/repo/docker/default /etc/nginx/sites-available/default && \
-	chmod -R 0755 /var/www && \
-	chown -R www-data:www-data /var/www && \
-	cd /var/www/forum && \
-	php-fpm8.1 -R -D && \
-	service nginx start && \
-	cd /app && \
-	python manage.py runserver 0.0.0.0:8000
+	pip install gunicorn && \ 
+	python manage.py runserver 0.0.0.0:8000 && \
+
+EXPOSE 80
