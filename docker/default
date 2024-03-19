@@ -1,5 +1,5 @@
 server {
-	server_name purplepure.com;
+	server_name purplepure.fly.dev;
 	proxy_read_timeout 300;
 	proxy_connect_timeout 300;
 	proxy_send_timeout 300;
@@ -21,7 +21,7 @@ server {
 
 server {
     listen 80;
-    server_name forum.purplepure.com;
+    server_name forum.purplepure.fly.dev;
 
     root /var/www/forum;
     index index.html index.htm index.php;
